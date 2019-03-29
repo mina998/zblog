@@ -1,13 +1,12 @@
 <div class="layui-container">
-    <a class="fly-logo" href="/"><img height="40" src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"></a>
+    <a class="fly-logo" id="webname" href="">{{webname}}</a>
+    <!--<a class="fly-logo" href="/"><img height="40" src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"></a>-->
     <ul class="layui-nav fly-nav layui-hide-xs">
         <li class="layui-nav-item"><a href="{{url_for('home.index')}}">首页</a></li>
         {%for n in nav%}
         <li class="layui-nav-item"><a href="{{url_for('home.classify',id=n.id,title=n.title,page=1)}}">{{n.title}}</a></li>
         {%endfor%}
     </ul>
-
-
     <ul class="layui-nav fly-nav-user">
         <li class="layui-nav-item">
 

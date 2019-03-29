@@ -17,6 +17,5 @@ def register(app):
 
 blog = create_app()
 
-
 if __name__ == '__main__':
-    blog.run()
+    blog.run(port=80)
