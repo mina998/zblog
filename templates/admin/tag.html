@@ -1,0 +1,63 @@
+{% extends 'admin/common/layout.html' %}
+{% block main %}
+<div class="content-header">
+{% import "admin/widgets/breadcrumb.html" as macros %}
+{{ macros.breadcrumb(breadcrumb(id=8))}}
+</div>
+<div class="content-body">
+    <div class="container-fluid">
+        {% include 'admin/common/message.html' %}
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">主要内容</div>
+            </div>
+            <div class="panel-body">
+                <form method="post" action="{{url_for('admin.tag_del')}}">
+                    <div class="table-tools" style="margin-bottom: 15px;">
+                        <div class="tools-group">
+                            <button onclick="javascript:return del('确认删除吗!')" type="submit" class="btn btn-danger">
+                                <i class="icon icon-remove-sign"></i> 删除
+                            </button>
+                        </div>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th width="30"><input type="checkbox"></th>
+                            <th width="50">ID</th>
+                            <th>名称</th>
+                            <th>点击次数</th>
+                            <th>文章数量</th>
+                            <th width="150">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for tag in pagination.items%}
+                        <tr>
+                            <td><input name="id" type="checkbox" value="{{tag.id}}"></td>
+                            <td>{{tag.id}}</td>
+                            <td>{{tag.name}}</td>
+                            <td>{{tag.click}}</td>
+                            <td>{{tag.posts|length}}</td>
+                            <td>
+                                <a href="{{url_for('admin.tag_edit',id=tag.id)}}" class="btn btn-xs btn-primary">编辑</a>
+                                <a onclick="javascript:return del('删除无法恢复')" href="{{url_for('admin.tag_del',id=tag.id)}}" class="btn btn-xs btn-danger">删除</a>
+                            </td>
+                        </tr>
+                        {%endfor%}
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+
+            <div class="panel-footer">
+                <ul class="pager" style="margin: 0">
+                    {% import "admin/widgets/pagination.html" as macros %}
+                    {{ macros.pagination(pagination,args) }}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main %}

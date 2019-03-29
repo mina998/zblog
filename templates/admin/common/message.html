@@ -1,0 +1,25 @@
+{% with errors = get_flashed_messages(category_filter="err") %}
+{% if errors %}
+<div class="alert alert-danger with-icon">
+    <i class="icon-remove-sign"></i>
+    <div class="content">
+        {% for msg in errors %}
+        {{ msg }}<br>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endwith %}
+
+{% with messages = get_flashed_messages(category_filter="ok") %}
+{% if messages %}
+<div class="alert alert-success with-icon">
+    <i class="icon-ok-sign"></i>
+    <div class="content">
+        {% for message in messages %}
+        {{ message }} <br>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endwith %}

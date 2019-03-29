@@ -1,0 +1,76 @@
+{% extends 'home/common/layout.html' %}
+<!--网站标题-->
+{% block title %}{{main.title}}-{{webname}}{% endblock title %}
+<!--SEO关键词-->
+{% block keywords %}{{main.keywords}}{% endblock keywords %}
+<!--SEO关键词-->
+{% block description %}{{main.desc}}{% endblock description %}
+<!--主体内容-->
+{% block main %}
+<div class="layui-container" id="uiMods" data="['element','layer']">
+    <div class="layui-row layui-col-space15">
+        <!--Left Start-->
+        <div class="layui-col-md8">
+            <!--置顶文章-->
+            {% import "home/widgets/gtop.html" as macros %}
+            {{ macros.gtop(gtop) }}
+            <!--文章列表-->
+            <div class="fly-panel">
+                <div class="fly-panel-title fly-filter"><span>文章</span></div>
+                <ul class="fly-list zb-list">
+                    {%for post in main.posts%}
+                    <li>
+                        <h2><a href="{{url_for('home.post',id=post.id,title=post.title)}}">{{post.title}}</a></h2>
+                        <div class="fly-list-info">
+                            <span>{{post.uptime.strftime('%Y-%m-%d')}}</span>
+                            <a href="{{url_for('home.classify',id=post.classify.id,title=post.classify.title,page=1)}}" title="{{post.classify.title}}">
+                                <i class="layui-badge fly-badge-vip">{{post.classify.title}}</i>
+                            </a>
+                            <span class="fly-list-kiss" title="浏览次数"><i class="iconfont icon-kiss"></i> {{post.view}}</span>
+                            <span class="fly-list-nums">
+                                <i class="iconfont icon-pinglun1" title="评论数"></i> {{post.review|length}}
+                            </span>
+                        </div>
+                        <div class="fly-list-info zb-text-footer">
+                            {{post.content|striptags|truncate(130)}}
+                        </div>
+                        {%if post.tags%}
+                        <div class="fly-list-info">
+                            {%for tag in post.tags%}
+                            <a href="{{url_for('home.tag',id=tag.id,name=tag.name)}}" title="{{tag.name}}" class="layui-badge-rim zb-badge-accept layui-hide-xs">
+                                {{tag.name}}
+                            </a>
+                            {%endfor%}
+                        </div>
+                        {%endif%}
+                        <div class="fly-list-badge">
+                            {%if post.passwd%}
+                            <span class="layui-badge" title="密码查看">密码</span>
+                            {%endif%}
+                        </div>
+                    </li>
+                    {%endfor%}
+                </ul>
+            </div>
+
+        </div>
+        <!--Left End-->
+        <!--Right Start-->
+        <div class="layui-col-md4">
+            <!--热门文章-->
+            {% import "home/widgets/hot.html" as macros %}
+            {{ macros.hot(hot(10)) }}
+            <!--热评文章-->
+            {% import "home/widgets/reviews.html" as macros %}
+            {{ macros.reviews(reviews(10)) }}
+            <!--广告区域-->
+            {% import "home/widgets/ad.html" as macros %}
+            {{ macros.ad(1) }}
+            <!--TAG标签-->
+            {% import "home/widgets/tag.w.html" as macros %}
+            {{ macros.wtag(wtag(num=50)) }}
+        </div>
+        <!--Right End-->
+    </div>
+</div>
+{% endblock main %}

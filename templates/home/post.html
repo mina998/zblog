@@ -1,0 +1,152 @@
+{% extends 'home/common/layout.html' %}
+<!--SEO标题-->
+{% block title %}{{main.title}}-{{main.classify.title}}{% endblock title %}
+<!--SEO关键词-->
+{% block keywords %}{{main.keywords}}{% endblock keywords %}
+<!--SEO关键词-->
+{% block description %}{{main.desc}}{% endblock description %}
+<!--头部CSS-->
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/desert.css')}}">
+{% endblock css %}
+<!--头部JS-->
+{% block js %}
+<script src="//cdn.staticfile.org/prettify/r298/prettify.min.js"></script>
+<script src="//cdn.staticfile.org/clipboard.js/2.0.4/clipboard.min.js"></script>
+<script src="//cdn.vaptcha.com/v2.js"></script>
+{% endblock js %}
+<!--主体内容-->
+{% block main %}
+    <div class="layui-container" id="uiMods" layui="post" data="['element','layer','form','layedit']">
+        <div class="layui-row layui-col-space15">
+            <!--Left Start-->
+            <div class="layui-col-md8 content detail">
+                {%if main.passwd == g.view_post_passwd%}
+                <!--文章主体-->
+                <div class="fly-panel detail-box">
+                    <h1>{{main.title}}</h1>
+                    <div class="fly-detail-info">
+                        <a class="layui-badge" href="{{url_for('home.classify',title=main.classify.title,id=main.classify.id,page=1)}}">{{main.classify.title}}</a>
+                        <span class="fly-list-nums">
+                        <i class="iconfont icon-shijian" title="添加日期"></i> {{main.uptime.strftime('%Y-%m-%d')}}
+                        <a href="#comment"><i class="iconfont" title="评论数">&#xe60c;</i> {{main.reviews|length}}</a>
+                        <i class="iconfont" title="浏览次数">&#xe60b;</i> {{main.view}}
+                     </span>
+                    </div>
+                    <!--
+                    <div class="detail-about">内容摘要</div>
+                    -->
+                    <div id="content" class="layui-text">
+                        {{main.content|safe}}
+                    </div>
+                </div>
+                <!--评论主体-->
+                {%if main.is_review != 1%}
+                <div class="fly-panel detail-box" id="flyReply">
+                        <fieldset class="layui-elem-field layui-field-title" style="text-align: center;">
+                            <legend>评论</legend>
+                        </fieldset>
+                        <!--评论列表-->
+                        <ul class="jieda" id="jieda">
+                            {%for item in main.reviews%}
+                            <li class="jieda-daan" id="at{{item.id}}">
+                                <div class="detail-about detail-about-reply">
+                                <span class="fly-avatar">
+                                    <img src="/static/images/user.jpg">
+                                </span>
+                                    <div class="fly-detail-user comment">
+                                        <a href="#editor" class="fly-link">
+                                            <cite data="at{{item.id}}">{{item.name}}</cite>
+                                            <i class="iconfont icon-renzheng"></i>
+                                            <i class="layui-badge fly-badge-vip">回复</i>
+                                        </a>
+                                    </div>
+                                    <div class="detail-hits">
+                                        <span>{{item.addtime.strftime('%Y-%m-%d %H:%M:%S')}}</span>
+                                    </div>
+                                    <span class="lou" title="楼">#{{loop.index}}</span>
+                                </div>
+                                <div class="detail-body jieda-body photos">
+                                    {%if item.ban%}
+                                    <p style="color: #aaa">*****禁止显示*****</p>
+                                    {%else%}
+                                    <span class="at">{{item.at|safe}}</span>
+                                    {{item.comment|safe}}
+                                    {%endif%}
+                                </div>
+                            </li>
+                            {%endfor%}
+                        </ul>
+                        <!--评论表单-->
+                        <div class="layui-form layui-form-pane">
+                            <form action="{{url_for('home.post_reviews', pid=main.id)}}" method="post" id="editor">
+                                <div class="layui-form-item layui-row layui-col-space15">
+                                    <div class="layui-col-md6">
+                                        {{form.email}}
+                                    </div>
+                                    <div class="layui-col-md6">
+                                        {{form.name}}
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <div class="layui-input-block">
+                                        {{form.comment}}
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                {% import "home/widgets/vaptcha.html" as macros %}
+                                {{ macros.vaptcha(vaptcha()) }}
+                                </div>
+                                <div class="layui-form-item">
+                                    {{form.submit}}
+                                    {{form.csrf_token}}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                {%endif%}
+
+                {%else%}
+                 <form class="layui-form" method="post">
+                        <div class="layui-form-mid layui-word-aux" style="color:#FF5722!important">
+                            {% with errors = get_flashed_messages(category_filter="err") %}
+                                {% for msg in errors %}
+                                {{ msg }}
+                                {% endfor %}
+                            {% endwith %}
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-input-inline">
+                                <input type="password" name="passwd2" required lay-verify="required" placeholder="请输入查看密码" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block" style="margin-left: 1px">
+                                <button class="layui-btn" lay-submit>查看</button>
+                            </div>
+                        </div>
+                    </form>
+                {%endif%}
+            </div>
+            <!--Left End-->
+
+            <!--Right Start-->
+            <div class="layui-col-md4">
+                <!--热门文章-->
+                {% import "home/widgets/hot.html" as macros %}
+                {{ macros.hot(hot(10)) }}
+                <!--热评文章-->
+                {% import "home/widgets/reviews.html" as macros %}
+                {{ macros.reviews(reviews(10)) }}
+                <!--广告区域-->
+                {% import "home/widgets/ad.html" as macros %}
+                {{ macros.ad(1) }}
+                <!--TAG标签-->
+                {% import "home/widgets/tag.w.html" as macros %}
+                {{ macros.wtag(wtag(num=50)) }}
+            </div>
+            <!--Right End-->
+        </div>
+    </div>
+{% endblock main %}

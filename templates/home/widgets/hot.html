@@ -1,0 +1,18 @@
+{% macro hot(data) %}
+
+<dl class="fly-panel fly-list-one">
+    <dt class="fly-panel-title">热门文章</dt>
+    {%if data%}
+    {%for item in data%}
+    <dd>
+        <a href="{{url_for('home.post',title=item.title,id=item.id)}}">{{item.title}}</a>
+        <span><i class="iconfont">&#xe60b;</i> {{item.view}}</span>
+    </dd>
+    {%endfor%}
+    {%else%}
+    <!-- 无数据时 -->
+    <div class="fly-none">没有相关数据</div>
+    {%endif%}
+</dl>
+
+{% endmacro %}

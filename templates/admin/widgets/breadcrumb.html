@@ -1,0 +1,12 @@
+{% macro breadcrumb(data=[]) %}
+<ol class="breadcrumb">
+    <li><a href="{{url_for('admin.index')}}"><i class="icon icon-home"></i> 首页</a></li>
+    {%for i in data%}
+    {%if loop.last%}
+    <li class="active">{{i.name}}</li>
+    {%else%}
+    <li><a href="{{url_for(i.url)}}">{{i.name}}</a></li>
+    {%endif%}
+    {%endfor%}
+</ol>
+{% endmacro %}

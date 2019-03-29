@@ -1,0 +1,84 @@
+{% extends 'admin/common/layout.html' %}
+{% block main %}
+
+<div class="content-header">
+{% import "admin/widgets/breadcrumb.html" as macros %}
+{{ macros.breadcrumb(breadcrumb(id=5)) }}
+</div>
+
+<div class="content-body">
+    <div class="container-fluid">
+    {% include 'admin/common/message.html' %}
+    <div class="panel">
+        <div class="panel-heading">
+            <div class="panel-title">主要内容</div>
+        </div>
+        <div class="panel-body">
+            <div class="table-tools" style="margin-bottom: 15px;">
+                <div class="pull-right" style="width: 550px;">
+                    <form method="post">
+                        <div class="input-group">
+                            <span class="input-group-addon">选择</span>
+                            {{form.cid(required=False)}}
+                            <span class="input-group-addon fix-border fix-padding"></span>
+                            {{form.sid(required=False)}}
+                            <span class="input-group-addon fix-border fix-padding"></span>
+                            {{form.keywords}}
+                            <span class="input-group-btn">
+                                {{form.submit(class='btn btn-default',value='查询')}}
+                                {{form.csrf_token}}
+                                <a href="{{url_for('admin.post')}}" class="btn">查看全部</a>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <div class="tools-group">
+                    <a href="{{url_for('admin.post_add')}}" class="btn btn-primary"><i class="icon icon-plus-sign"></i> 新增</a>
+                    <span class="btn btn-danger post del"><i class="icon icon-remove-sign"></i> 删除</span>
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th width="30"><input type="checkbox"></th>
+                    <th width="50">ID</th>
+                    <th>分类</th>
+                    <th>标题</th>
+                    <th width="150">日期</th>
+                    <th>浏览次数</th>
+                    <th>评论数</th>
+                    <th>状态</th>
+                    <th width="150">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {%for post in pagination.items%}
+                <tr>
+                    <td><input name="id" value="{{post.id}}" type="checkbox"></td>
+                    <td>{{post.id}}</td>
+                    <td>{{post.classify.title}}</td>
+                    <td><a target="_blank" href="{{url_for('home.post',id=post.id,title=post.title)}}">{{post.title}}</a></td>
+                    <td>{{post.uptime.strftime("%Y-%m-%d %H:%M:%S")}}</td>
+                    <td>{{post.view}}</td>
+                    <td>{{post.reviews|length}}</td>
+                    <td>{{post.style.name}}</td>
+                    <td>
+                        <a href="{{url_for('admin.post_edit', id=post.id)}}" class="btn btn-xs btn-primary">编辑</a>
+                        <a onclick="javascript:return del('确认删除吗?')" href="{{url_for('admin.post_del', all=post.id)}}" class="btn btn-xs btn-danger">删除</a>
+                    </td>
+                </tr>
+                {%endfor%}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="panel-footer">
+            <ul class="pager" style="margin: 0">
+                {% import "admin/widgets/pagination.html" as macros %}
+                {{ macros.pagination(pagination,args) }}
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock main %}

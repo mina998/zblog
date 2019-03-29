@@ -1,0 +1,57 @@
+{% extends 'admin/common/layout.html' %}
+{% block main %}
+<div class="content-header">
+{% import "admin/widgets/breadcrumb.html" as macros %}
+{{ macros.breadcrumb(breadcrumb(id=2))}}
+</div>
+<div class="content-body">
+    <div class="container-fluid">
+        {% include 'admin/common/message.html' %}
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">主要内容</div>
+            </div>
+            <div class="panel-body">
+                <form method="post" action="{{url_for('admin.classify_del')}}">
+                    <div class="table-tools" style="margin-bottom: 15px;">
+                        <div class="tools-group">
+                            <a href="{{url_for('admin.classify_add')}}" id="bmenu" class="btn btn-primary"><i class="icon icon-plus-sign"></i> 新增</a>
+                            <button type="submit" class="del btn btn-danger"><i class="icon icon-remove-sign"></i> 删除</button>
+                        </div>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th width="30"><input type="checkbox"></th>
+                            <th width="50">ID</th>
+                            <th width="60">排序</th>
+                            <th>名称</th>
+                            <th>文章数量</th>
+                            <th>是否显示在导航</th>
+                            <th width="150">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for class in classify%}
+                        <tr>
+                            <td><input name="id" type="checkbox" value="{{class.id}}"></td>
+                            <td>{{class.id}}</td>
+                            <td>{{class.sort}}</td>
+                            <td>{{class.title}}</td>
+                            <td>{{class.pnum}}</td>
+                            <td>{% if class.asn %} 否 {%else%} 是 {% endif %}</td>
+                            <td>
+                                <a href="{{url_for('admin.classify_edit',id=class.id)}}" class="btn btn-xs btn-primary">编辑</a>
+                                <a onclick="javascript:return del('删除无法恢复')" href="{{url_for('admin.classify_del',id=class.id)}}" class="btn btn-xs btn-danger">删除</a>
+                            </td>
+                        </tr>
+                        {%endfor%}
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main %}

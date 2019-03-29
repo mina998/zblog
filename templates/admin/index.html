@@ -1,0 +1,155 @@
+{% extends 'admin/common/layout.html' %}
+{% block main %}
+<div class="content-header">
+    {% import "admin/widgets/breadcrumb.html" as macros %}
+    {{ macros.breadcrumb()}}
+</div>
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 col-sm-4 col-xs-6">
+                <div class="info-box bg-info">
+                    <div class="info-box-icon">
+                        <i class="icon icon-file-text"></i>
+                    </div>
+                    <div class="info-box-content">
+                        <span class="info-box-text">文章总量</span>
+                        <span class="info-box-number">{{posts}}
+                            <small>篇</small>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6">
+                <div class="info-box bg-warning">
+                    <div class="info-box-icon">
+                        <i class="icon icon-comments"></i>
+                    </div>
+                    <div class="info-box-content">
+                        <span class="info-box-text">评论总量</span>
+                        <span class="info-box-number">{{reviews}}
+                            <small>条</small>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6">
+                <div class="info-box bg-primary">
+                    <div class="info-box-icon">
+                        <i class="icon icon-tags"></i>
+                    </div>
+                    <div class="info-box-content">
+                        <span class="info-box-text">标签总量</span>
+                        <span class="info-box-number">{{tags}}
+                            <small>条</small>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6">
+                <div class="info-box bg-special">
+                    <div class="info-box-icon">
+                        <i class="icon icon-bars"></i>
+                    </div>
+                    <div class="info-box-content">
+                        <span class="info-box-text">分类总量</span>
+                        <span class="info-box-number">{{classifys}}
+                            <small>个</small>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6">
+                <div class="info-box bg-success">
+                    <div class="info-box-icon">
+                        <i class="icon icon-share"></i>
+                    </div>
+                    <div class="info-box-content">
+                        <span class="info-box-text">页面数量</span>
+                        <span class="info-box-number">0
+                            <small>页</small>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6">
+                <div class="info-box bg-danger">
+                    <div class="info-box-icon">
+                        <i class="icon icon-eye-open"></i>
+                    </div>
+                    <div class="info-box-content">
+                        <span class="info-box-text">PV总量</span>
+                        <span class="info-box-number">{{pvs}}
+                            <small>次</small>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div class="panel-title">产品信息</div>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-info">
+                            <tr>
+                                <td>产品名称</td>
+                                <td>{{name}}</td>
+                            </tr>
+                            <tr>
+                                <td>核心框架</td>
+                                <td>{{framework}}</td>
+                            </tr>
+                            <tr>
+                                <td>开发作者</td>
+                                <td>{{author}}</td>
+                            </tr>
+                            <tr>
+                                <td>联系方式</td>
+                                <td>{{contact}}</td>
+                            </tr>
+                            <tr>
+                                <td>交流讨论</td>
+                                <td>{{discuss|safe}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div class="panel-title">服务器信息</div>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-info">
+                            <tr>
+                                <td>操作系统</td>
+                                <td>{{os}}</td>
+                            </tr>
+                            <tr>
+                                <td>运行环境</td>
+                                <td>Nginx/1.4.6</td>
+                            </tr>
+                            <tr>
+                                <td>Python版本</td>
+                                <td>{{python2}}</td>
+                            </tr>
+                            <tr>
+                                <td>数据库驱动</td>
+                                <td>{{data_driven|capitalize}}</td>
+                            </tr>
+                            <tr>
+                                <td>上传限制</td>
+                                <td>{{up_file_max}}M</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main %}

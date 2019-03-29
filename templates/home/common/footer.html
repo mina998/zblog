@@ -1,0 +1,12 @@
+<div class="footer-main">
+    <div class="footer-nav">
+        {%for n in nav%}
+        <a href="{{url_for('home.classify',id=n.id,title=n.title,page=1)}}">{{n.title}}</a>
+        {%endfor%}
+        {{site.tongji|safe}}
+    </div>
+    <div class="footer-certification">
+        <span class="copyright">{{webname}}版权所有©2018-2019</span>
+        <span style="color: #ccc;">{{site.copyright|safe}}</span>
+    </div>
+</div>

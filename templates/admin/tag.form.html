@@ -1,0 +1,33 @@
+{% extends 'admin/common/layout.html' %}
+{% block main %}
+<div class="content-header">
+    {% import "admin/widgets/breadcrumb.html" as macros %}
+    {{ macros.breadcrumb(breadcrumb(id=9))}}
+</div>
+
+<div class="content-body">
+    <div class="container-fluid">
+        {% include 'admin/common/message.html' %}
+        <form method="post" class="row">
+            <div class="col-md-8">
+                <div class="panel">
+                    <div class="panel-heading">主要内容</div>
+                    <form action="post">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                {{form.name.label}}
+                                {{form.name(required=False)}}
+                                {% for err in form.name.errors%}
+                                <div class="text-danger help">{{err}}</div>
+                                {% endfor %}
+                            </div>
+                            {{form.submit}}
+                            {{form.csrf_token}}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock main %}

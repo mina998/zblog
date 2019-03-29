@@ -1,0 +1,71 @@
+{% extends 'home/common/layout.html' %}
+<!--网站标题-->
+{% block title %}后台登陆-{{webname}}{% endblock title %}
+{% block js %}
+<script src="//cdn.vaptcha.com/v2.js"></script>
+{% endblock js %}
+<!--主体内容-->
+{% block main %}
+<div class="layui-container fly-marginTop" id="uiMods" data="['element','form']">
+        <div class="fly-panel fly-panel-user" pad20>
+            <div class="layui-tab layui-tab-brief" lay-filter="user">
+                <ul class="layui-tab-title"><li class="layui-this">登入</li></ul>
+                <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
+                    {% with errors = get_flashed_messages(category_filter="err") %}
+                    {% if errors %}
+                    <div style="margin-bottom: 10px; color:#c00;">
+                        {% for msg in errors %}
+                        {{ msg }}<br>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    {% endwith %}
+
+                    <div class="layui-tab-item layui-show">
+                        <div class="layui-form layui-form-pane">
+                            <form method="post">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{{form.username.label}}</label>
+                                    <div class="layui-input-inline">
+                                       {{form.username(required=false)}}
+                                    </div>
+                                    <div class="layui-form-mid" style="color: #c00">
+                                        {% for err in form.username.errors%}
+                                        <span>{{err}}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{{form.password.label}}</label>
+                                    <div class="layui-input-inline">
+                                        {{form.password(required=false)}}
+                                    </div>
+                                    <div class="layui-form-mid" style="color: #c00">
+                                        {% for err in form.password.errors%}
+                                        <span>{{err}}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-input-inline">
+                                    {% import "home/widgets/vaptcha.html" as macros %}
+                                    {{ macros.vaptcha(vaptcha()) }}
+                                    </div>
+                                    <div class="layui-form-mid" style="color: #c00; margin-left: 10px">
+                                        {% for err in form.vaptcha_token.errors%}
+                                        <span>{{err}}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    {{form.submit}}
+                                    {{form.csrf_token}}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main %}

@@ -1,0 +1,45 @@
+<aside class="main-sidebar">
+    <section class="sidebar">
+        <ul class="sidebar-menu" data-widget="tree">
+            <li class="header">主要菜单</li>
+            <li>
+                <a href="{{url_for('admin.index')}}">
+                    <i class="icon icon-dashboard"></i>
+                    <span>仪表盘</span>
+                    <span class="pull-right-container"></span>
+                </a>
+            </li>
+            <li class="treeview">
+                <a href="javascript:;">
+                    <i class="icon icon-th-list"></i>
+                    <span>博客操作</span>
+                    <span class="pull-right-container">
+                        <i class="icon icon-angle-left"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{url_for('admin.post_add')}}"><i class="icon icon-circle-blank"></i> 新建文章</a></li>
+                    <li><a href="{{url_for('admin.classify')}}"><i class="icon icon-circle-blank"></i> 分类管理</a></li>
+                    <li><a href="{{url_for('admin.post')}}"><i class="icon icon-circle-blank"></i> 文章管理</a></li>
+                    <li><a href="{{url_for('admin.tag')}}"><i class="icon icon-circle-blank"></i> 标签管理</a></li>
+                    <li><a href="{{url_for('admin.review')}}"><i class="icon icon-circle-blank"></i> 评论管理</a></li>
+                    <li><a href="#"><i class="icon icon-circle-blank"></i> 页面管理</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="javascript:;">
+                    <i class="icon icon-columns"></i>
+                    <span>其他操作</span>
+                    <span class="pull-right-container">
+                        <i class="icon icon-angle-left"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{url_for('admin.login_set')}}"><i class="icon icon-circle-blank"></i> 登陆设置</a></li>
+                    <li><a href="{{url_for('admin.user')}}"><i class="icon icon-circle-blank"></i> 个人资料</a></li>
+                    <li><a href="{{url_for('admin.site')}}"><i class="icon icon-circle-blank"></i> 站点设置</a></li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+</aside>

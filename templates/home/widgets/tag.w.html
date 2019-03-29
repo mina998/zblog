@@ -1,0 +1,15 @@
+{% macro wtag(data) %}
+<div class="fly-panel">
+    <h3 class="fly-panel-title">TAG标签</h3>
+    {%if data%}
+    <div class="fly-panel-main zb-tags">
+        {%for item in data%}
+        <a href="{{url_for('home.tag',name=item.name,id=item.id)}}" class="layui-badge layui-bg-green">{{item.name}}</a>
+        {%endfor%}
+    </div>
+    {%else%}
+    <!-- 无数据时 -->
+    <div class="fly-none">没有相关数据</div>
+    {%endif%}
+</div>
+{% endmacro %}

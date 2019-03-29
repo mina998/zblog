@@ -1,0 +1,67 @@
+{% extends 'admin/common/layout.html' %}
+{% block main %}
+<div class="content-header">
+    {% import "admin/widgets/breadcrumb.html" as macros %}
+    {% if id %}
+    {{ macros.breadcrumb(breadcrumb(id=4))}}
+    {% else %}
+    {{ macros.breadcrumb(breadcrumb(id=3))}}
+    {% endif %}
+</div>
+
+<div class="content-body">
+    <div class="container-fluid">
+        {% include 'admin/common/message.html' %}
+        <form method="post" enctype="multipart/form-data" class="row">
+            <div class="col-md-8">
+                <div class="panel">
+                    <div class="panel-heading">主要内容</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            {{form.title.label}}
+                            {{form.title(required=False)}}
+                            {% for err in form.title.errors%}
+                            <div class="text-danger help">{{err}}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            {{form.sort.label}}
+                            {{form.sort(required=False)}}
+                            {% for err in form.sort.errors%}
+                            <div class="text-danger help">{{err}}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <div class="cover-box">
+                                <button class="btn btn-sm btn-primary">选择封面</button>
+                                {{form.cover}}
+                            </div>
+                            {%if cover%}
+                            <img class="card cover" src="{{cover}}" style="height: 100px">
+                            {%else%}
+                             <img class="card cover" src="/static/images/upfile.png" style="height: 100px">
+                            {%endif%}
+                        </div>
+                        <div class="form-group">
+                            {{form.keywords.label}}
+                            {{form.keywords}}
+                        </div>
+                        <div class="form-group">
+                            {{form.desc.label}}
+                            {{form.desc}}
+                        </div>
+                        <div class="checkbox has-warning">
+                            <label>
+                                {{form.asn}} 禁止显示在导航栏
+                            </label>
+                        </div>
+                        {{form.submit}}
+                        {{form.csrf_token}}
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock main %}

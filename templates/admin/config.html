@@ -1,0 +1,97 @@
+{% extends 'admin/common/layout.html' %}
+{% block main %}
+
+<div class="content-header">
+{% import "admin/widgets/breadcrumb.html" as macros %}
+{{ macros.breadcrumb(breadcrumb(id=10)) }}
+</div>
+<div class="content-body">
+    <div class="container-fluid">
+        {% include 'admin/common/message.html' %}
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">系统设置</div>
+            </div>
+            <div class="panel-body">
+                <ul class="nav nav-tabs" style="margin-bottom: 20px;">
+                    <li class="active"><a href="###" data-target="#base" data-toggle="tab">基本</a></li>
+                    <li><a href="###" data-target="#other" data-toggle="tab">其它</a></li>
+                </ul>
+                <form class="tab-content" method="post">
+                    <div class="tab-pane fade active in" id="base">
+
+                        <div class="form-group">
+                            <label>
+                                {{form.title.label(class="required")}}
+                            </label>
+                            {{form.title(required=False)}}
+
+                            <div class="help-block" style="color: red">
+                            {% for err in form.title.errors%}
+                                {{err}}
+                            {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>{{form.keywords.label}}</label>
+                            {{form.keywords(required=False)}}
+                        </div>
+                        <div class="form-group">
+                            <label>{{form.desc.label}}</label>
+                            {{form.desc}}
+                        </div>
+                        <div class="form-group">
+                            <label>{{form.switch.label}}</label>
+                            <div class="radio-group">
+                                {% for sub in form.switch %}
+                                <label class="radio-inline">
+                                    {{ sub }}
+                                    {{ sub.label(style="font-weight: 400") }}
+                                </label>
+                                {% endfor %}
+                            </div>
+                            <div class="help-block">
+                                {%if form.switch.errors%}
+                                <span style="color:red;">
+                                    {% for err in form.switch.errors%}
+                                        {{err}}
+                                    {% endfor %}
+                                </span>
+                                {%else%}
+                                    关闭后前台将不能访问
+                                {%endif%}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>{{form.mark.label}}</label>
+                            {{form.mark}}
+                            <div class="help-block">网站关闭时显示</div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade in" id="other">
+                        <div class="form-group">
+                            <label>{{form.upfiletype.label}}</label>
+                           {{form.upfiletype}}
+                        </div>
+                        <div class="form-group">
+                            <label>{{form.copyright.label}}</label>
+                            {{form.copyright}}
+                        </div>
+                        <div class="form-group">
+                            <label>{{form.tongji.label}}</label>
+                            <div class="radio-group">
+                                {{form.tongji}}
+                            </div>
+                        </div>
+                    </div>
+                    {{form.submit}}
+                    {{form.csrf_token}}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main %}

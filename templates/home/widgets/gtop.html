@@ -1,0 +1,27 @@
+{% macro gtop(data) %}
+    {%if data%}
+    <div class="fly-panel">
+        <div class="fly-panel-title fly-filter"><a>置顶</a></div>
+        <ul class="fly-list">
+            {%for item in data%}
+            <li>
+                <h2 title="{{item.title}}">
+                    <a href="{{url_for('home.classify',id=item.classify.id, title=item.classify.title, page=1)}}" class="layui-badge">{{item.classify.title}}</a>
+                    <a href="{{url_for('home.post',id=item.id,title=item.title)}}">{{item.title}}</a>
+                </h2>
+                <div class="fly-list-info">
+                    <span>{{item.uptime.strftime('%Y-%m-%d')}}</span>
+                    <span class="fly-list-kiss layui-hide-xs" title="浏览次数"><i class="iconfont">&#xe60b;</i> {{item.view}}</span>
+                    <span class="fly-list-nums"><i class="iconfont icon-pinglun1" title="评论数"></i> {{item.reviews|length}}</span>
+                </div>
+                <div class="fly-list-badge">
+                    {%if item.passwd%}
+                    <span title="密码查看" class="layui-badge">密码</span>
+                    {%endif%}
+                </div>
+            </li>
+            {%endfor%}
+        </ul>
+    </div>
+    {%endif%}
+{% endmacro %}

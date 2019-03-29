@@ -1,0 +1,110 @@
+{% extends 'admin/common/layout.html' %}
+<!--加载CSS-->
+{% block css %}
+    <link rel="stylesheet" href="{{url_for('static',filename='system/css/editor.ext.css')}}">
+{% endblock css %}
+<!--加载js-->
+{% block js %}
+    <script src="//cdn.staticfile.org/wangEditor/3.1.1/wangEditor.min.js"></script>
+    <script src="{{url_for('static',filename='system/editor.ext.js')}}"></script>
+    <script src="{{url_for('static',filename='system/editor.conf.js')}}"></script>
+{% endblock js %}
+<!--主体内容-->
+{% block main %}
+    <div class="content-header">
+        {% import "admin/widgets/breadcrumb.html" as macros %}
+        {% if id %}
+        {{ macros.breadcrumb(breadcrumb(id=7))}}
+        {% else %}
+        {{ macros.breadcrumb(breadcrumb(id=6))}}
+        {% endif %}
+    </div>
+    <div class="content-body">
+        <div class="container-fluid">
+        {% include 'admin/common/message.html' %}
+        <form method="post" class="row">
+            <div class="col-md-9">
+                <div class="panel">
+                    <div class="panel-heading">主要内容</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            {{form.title.label(class="required")}}
+                            {{form.title(required=False)}}
+                            {% for err in form.title.errors%}
+                            <div class="text-danger help">{{err}}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            {{form.content.label(class="required")}}
+                            <div id="editor"></div>
+                            {{form.content(required=False)}}
+                            {% for err in form.content.errors%}
+                            <div class="text-danger help">{{err}}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            {{form.tags.label}}
+                            <div class="row">
+                                <div class="col-md-10">{{form.tags}}</div>
+                                <div class="col-md-2">
+                                    <a class="btn btn-mini" href="#collapse" data-toggle="collapse">显示常用标签</a>
+                                </div>
+                            </div>
+                            {%if tags%}
+                            <div class="collapse help" id="collapse">
+                                {%for tag in tags%}
+                                <a class="label label-info">{{tag.name}}</a>
+                                {%endfor%}
+                            </div>
+                            {%endif%}
+                        </div>
+                        <div class="form-group">
+                            {{form.summary.label}}
+                            {{form.summary}}
+                        </div>
+                        <div class="form-group">
+                            {{form.keywords.label}}
+                            {{form.keywords}}
+                        </div>
+                        <div class="form-group">
+                            {{form.desc.label}}
+                            {{form.desc}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="panel">
+                    <div class="panel-heading">附加选项</div>
+                    <div class="panel-body">
+                        <div class="form-group has-success">
+                            {{form.cid.label}}
+                            {{form.cid}}
+                        </div>
+                        <div class="form-group has-success">
+                            {{form.sid.label}}
+                            {{form.sid(required=False)}}
+                        </div>
+                        <div class="form-group has-success">
+                            {{form.passwd.label}}
+                            {{form.passwd}}
+                        </div>
+                        <div class="form-group has-success">
+                            {{form.author.label}}
+                            {{form.author}}
+                        </div>
+                        <div class="checkbox has-warning">
+                            <label>
+                                {{form.is_review}} 禁止评论
+                            </label>
+                        </div>
+                        {{form.submit}}
+                        {{form.csrf_token}}
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    </div>
+{% endblock main %}

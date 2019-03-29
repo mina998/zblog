@@ -1,0 +1,23 @@
+<header class="main-header">
+    <nav class="navbar navbar-fixed-top bg-primary">
+        <div class="navbar-header">
+            <a class="navbar-toggle" href="javascript:;" data-toggle="collapse" data-target=".navbar-collapse"><i class="icon icon-th-large"></i></a>
+            <a class="sidebar-toggle" href="javascript:;" data-toggle="push-menu"><i class="icon icon-bars"></i></a>
+            <a class="navbar-brand" href="#">
+                <span class="logo">ZBAdmin</span>
+                <span class="logo-mini">ZA</span>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav">
+                    <li><a href="javascript:;" data-toggle="push-menu"><i class="icon icon-bars"></i></a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{url_for('admin.logout')}}"><i class="icon icon-user"></i> 注销登陆 </a></li>
+                    <li><a href="{{url_for('home.index')}}" target="_blank"><i class="icon icon-home"></i> 网站首页 </a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

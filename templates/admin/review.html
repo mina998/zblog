@@ -1,0 +1,68 @@
+{% extends 'admin/common/layout.html' %}
+{% block main %}
+<div class="content-header">
+{% import "admin/widgets/breadcrumb.html" as macros %}
+{{ macros.breadcrumb(breadcrumb(id=1))}}
+</div>
+<div class="content-body">
+    <div class="container-fluid">
+        {% include 'admin/common/message.html' %}
+        <div class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">主要内容</div>
+            </div>
+            <div class="panel-body">
+                <form method="post" action="{{url_for('admin.review_del')}}">
+                    <div class="table-tools" style="margin-bottom: 15px;">
+                        <div class="tools-group">
+                            <button type="submit" class="btn btn-danger"> <i class="icon icon-remove-sign"></i> 删除 </button>
+                            <span class="btn btn-primary review up"><i class="icon icon-remove-sign"></i> 设置为禁止显示 </span>
+                        </div>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th width="30"><input type="checkbox"></th>
+                            <th width="50">ID</th>
+                            <th width="88">评论时间</th>
+                            <th>评论内容</th>
+                            <th width="100">评论者</th>
+                            <th width="150">评论者邮箱</th>
+                            <th width="160">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for review in pagination.items%}
+                        <tr>
+                            <td><input name="id" type="checkbox" value="{{review.id}}"></td>
+                            <td>{{review.id}}</td>
+                            <td>{{review.addtime.strftime('%Y-%m-%d')}}</td>
+                            <td>{{review.comment|safe}}</td>
+                            <td>{{review.name}}</td>
+                            <td>{{review.email}}</td>
+                            <td>
+                                {%if review.ban%}
+                                <a href="{{url_for('admin.review_allow',id=review.id)}}" class="btn btn-xs btn-success">设为显示</a>
+                                {%else%}
+                                <a href="{{url_for('admin.review_up',all=review.id)}}" class="btn btn-xs btn-info">禁止显示</a>
+                                {%endif%}
+                                <a target="_blank" href="{{url_for('home.post', id=1, title='管理查看')}}#s{{review.id}}" class="btn btn-xs btn-primary">查看</a>
+                                <a onclick="javascript:return del('删除无法恢复')" href="{{url_for('admin.review_del',id=review.id)}}" class="btn btn-xs btn-danger">删除</a>
+                            </td>
+                        </tr>
+                        {%endfor%}
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div class="panel-footer">
+                <ul class="pager" style="margin: 0">
+                    {% import "admin/widgets/pagination.html" as macros %}
+                    {{ macros.pagination(pagination,args) }}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main %}
