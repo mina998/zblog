@@ -62,7 +62,6 @@ def file_move_to(file):
     '''
     temp = UPLOAD_FILE_TEMP_PATH
     save = UPLOAD_FILE_SAVE_PATH.lstrip('/')
-    print(file)
     if file.startswith(temp) and os.path.isfile(file.strip('/')):
         # 生成文件夹路径
         folder = save + datetime.now().strftime("%Y%m%d")+'/'
@@ -70,8 +69,6 @@ def file_move_to(file):
         if (os.path.exists(folder)) is False: os.makedirs(folder, os.O_RDWR)
 
         dis = folder + file.replace(temp,'')
-
-        print(dis)
         src = file.lstrip('/')
         shutil.move(src, dis)  # 移动文件
         file_delete(src) # 删除空文件夹 或 文件

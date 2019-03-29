@@ -78,6 +78,15 @@ def site():
 
 @admin.route('/user', methods=['GET','POST'])
 def user():
+    # 删除头像
+    if request.args.get('cover') == 'del':
+        cover = Site.query.filter(Site.name=='avatar').one()
+        file_delete(cover.value)
+        cover.value = ''
+        db.session.add(cover)
+        db.session.commit()
+        return jsonify(dict(err=0))
+    # 更新数据
     default = site_to_dict(Site.query.filter_by(group='user').all())
     avatar = default['avatar']
     form = UserForm(data=default)

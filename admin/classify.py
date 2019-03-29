@@ -1,5 +1,5 @@
 # coding:utf-8
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, jsonify
 from admin.helper import file_move_to, field_obj_set, to_dict, file_delete
 from admin.forms.classify import ClassifyForm
 from common.uploads import Uploads
@@ -58,6 +58,14 @@ def classify_edit(id):
 
     classify = Classify.query.get_or_404(id)
     cover = classify.cover
+    # 删除封面
+    if request.args.get('cover') == 'del':
+        classify.cover = ''
+        db.session.add(classify)
+        db.session.commit()
+        file_delete(cover)
+        return jsonify(dict(err=0))
+
     form = ClassifyForm(data=to_dict(ClassifyForm,classify))
     # 表单是否验证成功
     if form.validate_on_submit() and request.method=='POST':

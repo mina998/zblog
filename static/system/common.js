@@ -40,6 +40,31 @@ if ($('input#cover').length > 0){
 		}
 	}
 }
+//删除图片
+$('.del.btn').click(function () {
+	cover = '/static/images/upfile.png'
+	field = $(this).attr('data')
+	avatar= $('.card.cover')
+	if (avatar.attr('src') != cover){
+		$.get(window.location.pathname,{'cover':'del'},function (res) {
+			console.log(res)
+			if (res.err==0){
+				alert('头像删除成功!')
+				avatar.attr('src',cover)
+				return false
+			}
+			alert('删除失败!')
+		})
+	}
+
+})
+
+
+
+
+
+
+
 
 
 $('.btn.post.del').click(function () {
