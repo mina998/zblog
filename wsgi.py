@@ -18,4 +18,4 @@ def register(app):
 blog = create_app()
 
 if __name__ == '__main__':
-    blog.run(port=80)
+    blog.run(host='0.0.0.0',port='80')

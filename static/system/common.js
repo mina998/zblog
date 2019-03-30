@@ -41,7 +41,7 @@ if ($('input#cover').length > 0){
 	}
 }
 //删除图片
-$('.del.btn').click(function () {
+$('.del.btn.cover').click(function () {
 	cover = '/static/images/upfile.png'
 	field = $(this).attr('data')
 	avatar= $('.card.cover')
@@ -56,21 +56,13 @@ $('.del.btn').click(function () {
 			alert('删除失败!')
 		})
 	}
-
 })
 
 
-
-
-
-
-
-
-
+//删除文章提示
 $('.btn.post.del').click(function () {
 	locations('/admin/post/del','将删除和文章相关的所有标签和评论!')
 })
-
 
 $('.btn.review.up').click(function () {
 	locations('/admin/review/up/')
