@@ -49,7 +49,7 @@ $('.del.btn.cover').click(function () {
 		$.get(window.location.pathname,{'cover':'del'},function (res) {
 			console.log(res)
 			if (res.err==0){
-				alert('头像删除成功!')
+				alert('删除成功!')
 				avatar.attr('src',cover)
 				return false
 			}
